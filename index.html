@@ -1,0 +1,49 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Yujuuuuu!</title>
+    <script type="text/javascript" src="jquery-3.2.1.js"></script>    
+    <script src="https://unpkg.com/vue"></script>
+  </head>
+  <body>    
+    <div id="appMaestro">
+      <ol>
+        <listado
+          v-for="item in items"
+          v-bind:todo="item"
+          v-bind:key="item.id">
+        </listado>
+      </ol>
+    </div>
+    
+    <div id="appFormulario"> 
+    {{persona}}
+    </br>
+    <button v-on:click="visibleBorrado">Nuevo</button>
+      <form v-show="visible" v-on:submit.prevent="onSubmit">
+        <label>
+          Nombre:
+          <input id="Nombre" type="text" placeholder="edit me" v-model="persona.nombre"/>
+        </label>
+        <br/>
+        <label>
+          Apellidos:
+          <input id="Apellido" type="text" placeholder="edit me" v-model="persona.apellidos"/>
+        </label>
+        <br/>
+        <label>
+          Edad:
+          <input id="Edad" type="text" placeholder="edit me" v-model="persona.edad"/>
+        </label>
+        <br/>
+         <input id="inputCrear" type="submit" value="Crear" />
+         <button id="buttonModificar" type="buttonNuevo">Modificar</button> 
+         <button id="buttonBorrar" v-on:click="borrarPersona" type="buttonBorr">Borrar</button> 
+         
+      </form>
+    </div>
+
+    
+  </body>  
+  <script type="text/javascript" src="script.js"></script>
+</html>
