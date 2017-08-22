@@ -36,9 +36,10 @@
           <input id="Edad" type="text" placeholder="edit me" v-model="persona.edad"/>
         </label>
         <br/>
-         <input id="inputCrear" type="submit" value="Crear" />
-         <button id="buttonModificar" type="buttonNuevo">Modificar</button> 
-         <button id="buttonBorrar" v-on:click="borrarPersona" type="buttonBorr">Borrar</button> 
+         <!--<input id="inputCrear" type="submit" value="Crear" />-->
+         <button id="buttonCrear" v-on:click="crearPersona" type="buttonNuevo">Crear</button> 
+         <button id="buttonModificar" v-on:click="modificarPersona" type="buttonModi">Modificar</button> 
+         <button id="buttonBorrar" v-on:click="borrarPersona" type="buttonBorr" >Borrar</button> 
          
       </form>
     </div>

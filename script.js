@@ -21,7 +21,7 @@ Vue.component('listado', {
           debugger;
         },                
         complete : function(xhr, status) {
-            alert('Petición realizada');
+            alert('Petición realizada cargarClikMaestro');
         }
     });
     }
@@ -67,11 +67,12 @@ var maestro = new Vue({
           },
           //Si hay error
           error : function(){
+            alert('Problemas al cargar el listado');
             debugger;
           },        
           // código a ejecutar sin importar si la petición falló o no
           complete : function(xhr, status) {
-              alert('Petición realizada');
+              alert('Petición realizada cargalistado');
           }
       });
     }
@@ -83,6 +84,7 @@ var formulario = new Vue({
   el: '#appFormulario',
   data: {
     visible: false,
+    deshabilitado: true,
     persona:{id: '', nombre: '', apellidos: '', edad: '' }
   },
   methods: {
@@ -98,6 +100,9 @@ var formulario = new Vue({
 
     },
     onSubmit: function(event){
+    	maestro.cargalistado();
+    },
+    crearPersona: function(event){
       var nombre1 = this.persona.nombre;
       var apellidos1 = this.persona.apellidos;
       var edad1 = this.persona.edad;
@@ -107,7 +112,7 @@ var formulario = new Vue({
         //Curso
         url : 'http://10.60.23.20:49581/api/Personas/',     
         //Trabajo
-        //url : 'http://10.60.9.127:49581/api/Personas/',
+        //url : 'http://10.60.9.127:49581/api/Personas/',        
         type : 'POST',     
         dataType : 'json',
         data: { Nombre : nombre1, Apellidos: apellidos1, Edad: edad1 },
@@ -117,12 +122,13 @@ var formulario = new Vue({
         },
         //Si hay error
         error : function(){
-          debugger;
+        	alert('Mal');
+          	debugger;
         },        
         // código a ejecutar sin importar si la petición falló o no
         complete : function(xhr, status) {
-            alert('Petición realizada');
-            maestro.cargalistado();
+            alert('Petición realizada CrearPersona');
+            //maestro.cargalistado();
         }
       });
     },
@@ -134,8 +140,63 @@ var formulario = new Vue({
         this.persona.edad = data.Edad;
     },
     borrarPersona: function(){
-      alert('borrando...');
-        
+    	var id1 = this.persona.id;
+    	alert('borrando...'+ id1);
+      $.ajax({
+        //Curso
+        url : 'http://10.60.23.20:49581/api/Personas/'+id1,   
+        //Tabajo
+        //url : 'http://10.60.9.127:49581/api/Personas/',  
+        //data : { Id : id1 },     
+        type : 'DELETE',
+        //dataType : 'persona',     
+        success : function() {
+          alert('YUPII');
+          //debugger;
+          //formulario.rellenarDatosClick(data);
+        },
+        error : function(respon){
+          //console.log(respon);
+       		alert('CACA');
+        	//debugger;
+        },                
+        complete : function(xhr, status) {
+            alert('Petición realizada borrarPersona');
+            maestro.cargalistado();
+        }
+	    });
+    },
+    modificarPersona: function(){
+    	var id1 = this.persona.id;
+    	var nombre1 = this.persona.nombre;
+	  	var apellidos1 = this.persona.apellidos;
+	  	var edad1 = this.persona.edad;
+	  	//alert(nombre1+' '+apellidos1);
+	  	$.ajax({
+	    	// la URL para la petición
+		    //Curso
+		    url : 'http://10.60.23.20:49581/api/Personas/'+id1,     
+		    //Trabajo
+		    //url : 'http://10.60.9.127:49581/api/Personas/',
+		    //data : { Id : id1 },
+		    type : 'PUT',     
+		    dataType : 'json',
+		    data: {Id : id1, Nombre : nombre1, Apellidos: apellidos1, Edad: edad1 },
+		    success : function(data) {            
+		        alert('Correcto');
+		        //debugger;
+		    },
+		    //Si hay error
+		    error : function(){
+		    	alert('CACA');
+		     	debugger;
+		    },        
+		    // código a ejecutar sin importar si la petición falló o no
+		    complete : function(xhr, status) {
+		        alert('Petición realizada modificarPersona');
+		        maestro.cargalistado();
+		    }
+	  	});
     }
   }
 });
